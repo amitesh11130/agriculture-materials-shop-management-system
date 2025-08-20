@@ -43,25 +43,23 @@ public class UserController {
         return new ApiResponse(meta, user, null);
     }
 
-    @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ApiResponse getUserById(@PathVariable Long userId) {
+    @GetMapping("/getById")
+    public ApiResponse getUserById(@RequestHeader Long userId) {
         User user = userService.getUserById(userId);
         Meta meta = new Meta(HttpStatus.OK.value(), true, "User retrieved successfully");
         return new ApiResponse(meta, user, null);
     }
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @GetMapping("/getAll")
     public ApiResponse getAllUsers() {
         List<User> users = userService.getAllUsers();
         Meta meta = new Meta(HttpStatus.OK.value(), true, "Users retrieved successfully");
         return new ApiResponse(meta, users, null);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/deleteById")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public ApiResponse deleteUser(@PathVariable Long userId) {
+    public ApiResponse deleteUser(@RequestHeader Long userId) {
         boolean deleted = userService.deleteUser(userId);
         Meta meta;
         if (!deleted) {

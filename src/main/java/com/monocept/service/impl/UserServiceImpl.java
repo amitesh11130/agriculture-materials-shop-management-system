@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +27,13 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager manager;
     private final UserSecurity userSecurity;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User createUser(UserDTO userDTO) {
-        return userRepository.save(Converter.convertUserDtoToEntity(userDTO));
+        User user = Converter.convertUserDtoToEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     @Override
