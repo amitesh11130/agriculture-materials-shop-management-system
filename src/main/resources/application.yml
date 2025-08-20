@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: agriculture-materials-shop-management-system
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springbootproject
+    username: postgres
+    password: AmitMono@897879
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
